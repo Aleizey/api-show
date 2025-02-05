@@ -1,13 +1,21 @@
 import { useState } from 'react'
 import './App.css'
+import Primary from './pages/Primary';
+import Categorias from './pages/Categorias';
+import NotFound from './pages/NotFound';
+import Header from './components/Header';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
 
   return (
     <>
-      <div>
-        <h1 className='text-red-500 text-lg font-bold'>Welcome to my app</h1>
-      </div>
+      <Header />
+      <Routes>
+        <Route element={<Primary />} path='/'></Route>
+        <Route element={<Categorias />} path='/categorias'></Route>
+        <Route element={<NotFound />} path='/*'></Route>
+      </Routes>
     </>
   )
 }
