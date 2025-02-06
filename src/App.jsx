@@ -4,30 +4,38 @@ import Primary from './pages/Primary';
 import Categorias from './pages/Categorias';
 import NotFound from './pages/NotFound';
 import Header from './components/Header';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Router, Routes } from 'react-router-dom';
 import ApiLoading from './components/ApiLoading';
 import ApiError from './components/ApiError';
 import { useFetch } from './components/UseFetch';
+import MyList from './pages/MyList';
 
 export const showContext = createContext()
 
 function App() {
 
   const { datos, error, loading } = useFetch("https://api.tvmaze.com/shows");
+  const [list, setList] = useState({ list: [] });
+
+  console.log("Lista:", list.list);
+
   console.log("DATOS", datos)
   if (loading) return <ApiLoading />;
   if (error) return <ApiError error={error} />;
 
   return (
     <>
-      <Header />
 
-      <showContext.Provider value={{datos}}>
+      <showContext.Provider value={{ datos, list }}>
         <Routes>
-          <Route element={<Primary />} path='/'></Route>
-          <Route element={<Categorias />} path='/categorias'></Route>
-          <Route element={<NotFound />} path='/*'></Route>
+          <Route element={<Header />}>
+            <Route path="/" element={<Primary />} />
+            <Route path="/categorias" element={<Categorias />} />
+            <Route path='/lista' element={<MyList />} />
+          </Route>
+          <Route path="/*" element={<NotFound />} />
         </Routes>
+
       </showContext.Provider>
 
     </>

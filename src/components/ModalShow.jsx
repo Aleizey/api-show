@@ -3,12 +3,47 @@ import ApiLoading from "./ApiLoading";
 import ApiError from "./ApiError";
 import { useFetch } from "./UseFetch";
 import SeasonsInfo from "./SeasonsInfo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const ModalShow = ({ modal, onClose }) => {
+const ModalShow = ({ modal, onClose, list }) => {
 
     const { datos, error, loading } = useFetch(`https://api.tvmaze.com/shows/${modal.id}/seasons`);
     const [seasonsShow, setSeasonsShow] = useState(null);
+
+    const [isAdded, setIsAdded] = useState(() => {
+        return localStorage.getItem(`isAdded${modal.id}`) === "true";
+    });
+
+    useEffect(() => {
+        localStorage.setItem(`isAdded${modal.id}`, isAdded);
+    }, [isAdded]);
+
+    const handleClick = () => {
+        if (isAdded) {
+            removeList();
+        } else {
+            addList();
+        }
+        setIsAdded(!isAdded);
+    };
+
+    const addList = () => {
+
+        if (!list.list.some(item => item.id === modal.id)) {
+            list.list.push(modal);
+            localStorage.setItem("lista", JSON.stringify(list));
+            console.log("Lista Modal:", list.list);
+        } else {
+            console.log("Está en la lista.");
+        }
+    }
+
+    const removeList = () => {
+
+        list.list = list.list.filter(item => item.id !== modal.id);
+        localStorage.setItem("lista", JSON.stringify(list));
+        console.log("Eliminado:", list.list);
+    };
 
     if (loading) return <ApiLoading />;
     if (error) return <ApiError error={error} />;
@@ -26,6 +61,20 @@ const ModalShow = ({ modal, onClose }) => {
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-7">
                                     <path d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" />
                                 </svg>
+                            </button>
+                            <button
+                                onClick={handleClick}
+                                className="animate-boton z-1 absolute bottom-0 mb-2 ms-2 p-2 bg-black/60 border-2 border-gray-300/80 rounded-full cursor-pointer"
+                            >
+                                {isAdded ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 animate-boton">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+                                    </svg>
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 animate-boton-2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                )}
                             </button>
                             <img className="w-full modal-img object-cover" src={modal.image.original} alt="" />
                         </div>
@@ -60,12 +109,12 @@ const ModalShow = ({ modal, onClose }) => {
                                 </div>
                             </div>
                             <div>
-                                <div className="flex flex-row justify-between mt-6 pb-4 border-b border-b-gray-700">
+                                <div className="flex flex-row justify-between mt-6 pb-4 border-b border-b-[#555]">
                                     <div className="text-3xl font-bold">Episodios</div>
                                     <div className="text-2xl">{modal.name}</div>
                                 </div>
                                 <div className="flex flex-col justify-end my-3">
-                                    <select className="bg-[#181818] w-full font-bold text-lg p-2 px-3 border-1 rounded-sm border-gray-500"
+                                    <select className="bg-[#181818] w-full font-bold text-lg p-2 px-3 border-1 rounded-sm border-[#555]"
                                         name="seasons"
                                         id="seasons"
                                         onChange={(e) => {
@@ -80,7 +129,7 @@ const ModalShow = ({ modal, onClose }) => {
 
                                     <div className="mt-3">
                                         {seasonsShow && (
-                                            <SeasonsInfo seasonsShow={seasonsShow} />
+                                            <SeasonsInfo key={seasonsShow.id} seasonsShow={seasonsShow} />
                                         )}
                                     </div>
 

@@ -6,7 +6,8 @@ import ModalShow from "../components/ModalShow";
 
 export default function Primary() {
 
-    const { datos } = useContext(showContext);
+    const { datos, list } = useContext(showContext);
+
     const [panel, setPanel] = useState(datos[0]);
     const [modal, setModal] = useState(null);
 
@@ -21,17 +22,17 @@ export default function Primary() {
             <TitlePage tipo={"Home"} />
 
             {panel && (
-                <PanelShow panel={panel} />
+                <PanelShow key={panel.id} panel={panel} list={list} />
             )}
 
             {modal && (
-                <ModalShow modal={modal} onClose={() => setModal(null)} />
+                <ModalShow modal={modal} onClose={() => setModal(null)} list={list} />
             )}
 
             <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 ">
                 {datos.map((item) => (
                     <div key={item.id}>
-                        <img src={item.image.original} alt="" className="panel-show w-full h-full shrink-0" onMouseOver={() => setPanel(item)} onClick={() => setModal(item)} />
+                        <img src={item.image.original} alt="" className="panel-show w-full h-full shrink-0 cursor-pointer" onMouseOver={() => setPanel(item)} onClick={() => setModal(item)} />
                     </div>
                 ))}
             </div>
