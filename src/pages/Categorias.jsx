@@ -1,18 +1,14 @@
-import { useFetch } from "../components/UseFetch";
-import ApiError from "../components/ApiError";
-import ApiLoading from "../components/ApiLoading";
 import TitlePage from "../components/titlePage";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import PanelShow from "../components/PanelShow";
+import { showContext } from "../App";
 
 const Categorias = () => {
 
-    const { datos, error, loading } = useFetch("https://api.tvmaze.com/shows");
-    const [panel, setPanel] = useState(null);
+    const { datos } = useContext(showContext);
+    const [panel, setPanel] = useState(datos[0]);
     const [modal, setModal] = useState(null);
 
-    if (loading) return <ApiLoading />;
-    if (error) return <ApiError error={error} />;
 
     const Generos = [...new Set(datos.flatMap((item) => item.genres))];
 

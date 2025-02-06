@@ -1,19 +1,14 @@
-import { useFetch } from "../components/UseFetch";
-import ApiError from "../components/ApiError";
-import ApiLoading from "../components/ApiLoading";
 import TitlePage from "../components/titlePage";
 import PanelShow from "../components/PanelShow";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { showContext } from "../App";
 import ModalShow from "../components/ModalShow";
 
 export default function Primary() {
 
-    const { datos, error, loading } = useFetch("https://api.tvmaze.com/shows");
-    const [panel, setPanel] = useState(null);
+    const { datos } = useContext(showContext);
+    const [panel, setPanel] = useState(datos[0]);
     const [modal, setModal] = useState(null);
-
-    if (loading) return <ApiLoading />;
-    if (error) return <ApiError error={error} />;
 
     if (modal) {
         document.body.classList.add("overflow-hidden");

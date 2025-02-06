@@ -9,6 +9,33 @@ body {
 .bg-header {
     background: linear-gradient(rgba(0, 0, 0, 0.562), rgba(0, 0, 255, 0));
     z-index: 100;
+    animation: header-1 0.7s;
+}
+
+@keyframes header-1 {
+    0% {
+        background-color: #000000f7;
+    }
+
+    100% {
+        background: linear-gradient(rgba(0, 0, 0, 0.562))
+    }
+}
+
+.bg-header-2 {
+    background-color: #000000f7;
+    z-index: 100;
+    animation: header-2 0.7s;
+}
+
+@keyframes header-2 {
+    0% {
+        background-color: rgba(255, 0, 0, 0);
+    }
+
+    100% {
+        background-color: #000000f7;
+    }
 }
 
 .h-panel {
