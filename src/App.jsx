@@ -1,14 +1,14 @@
 import { createContext, useState } from 'react'
+import { Route, Router, Routes } from 'react-router-dom';
+import { useFetch } from './components/UseFetch';
 import './App.css'
 import Primary from './pages/Primary';
 import Categorias from './pages/Categorias';
 import NotFound from './pages/NotFound';
-import Header from './components/Header';
-import { Route, Router, Routes } from 'react-router-dom';
+import MyList from './pages/MyList';
 import ApiLoading from './components/ApiLoading';
 import ApiError from './components/ApiError';
-import { useFetch } from './components/UseFetch';
-import MyList from './pages/MyList';
+import Layout from './components/Layout';
 
 export const showContext = createContext()
 
@@ -28,7 +28,7 @@ function App() {
 
       <showContext.Provider value={{ datos, list }}>
         <Routes>
-          <Route element={<Header />}>
+          <Route element={<Layout />}>
             <Route path="/" element={<Primary />} />
             <Route path="/categorias" element={<Categorias />} />
             <Route path='/lista' element={<MyList />} />

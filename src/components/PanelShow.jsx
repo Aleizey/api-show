@@ -4,6 +4,7 @@ import ApiLoading from "./ApiLoading";
 import ApiError from "./ApiError";
 
 const PanelShow = ({ panel }) => {
+
     const { datos, error, loading } = useFetch(`https://api.tvmaze.com/shows/${panel.id}/images`);
 
     if (loading) console.log(loading);
@@ -13,6 +14,7 @@ const PanelShow = ({ panel }) => {
 
     return (
         <div className="h-panel">
+            <div className="bg-h-panel"></div>
             <img
                 className="w-full h-full object-cover"
                 src={back?.resolutions?.original?.url || panel.image?.original}

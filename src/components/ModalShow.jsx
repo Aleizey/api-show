@@ -4,6 +4,7 @@ import ApiError from "./ApiError";
 import { useFetch } from "./UseFetch";
 import SeasonsInfo from "./SeasonsInfo";
 import { useEffect, useState } from "react";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const ModalShow = ({ modal, onClose, list }) => {
 
@@ -68,7 +69,7 @@ const ModalShow = ({ modal, onClose, list }) => {
                             >
                                 {isAdded ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 animate-boton">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+                                        <path d="M5 12h14" />
                                     </svg>
                                 ) : (
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 animate-boton-2">
@@ -131,6 +132,14 @@ const ModalShow = ({ modal, onClose, list }) => {
                                         {seasonsShow && (
                                             <SeasonsInfo key={seasonsShow.id} seasonsShow={seasonsShow} />
                                         )}
+                                    </div>
+
+                                    <div>
+                                        <DotLottieReact
+                                            src="https://lottie.host/fd5517a5-7de7-4061-889a-96bba753c487/0kswdgAhXd.lottie"
+                                            loop
+                                            autoplay
+                                        />
                                     </div>
 
                                 </div>

@@ -6,7 +6,7 @@ import ModalShow from "../components/ModalShow";
 
 const Categorias = () => {
 
-    const { datos } = useContext(showContext);
+    const { datos, list } = useContext(showContext);
     const [panel, setPanel] = useState(datos[0]);
     const [modal, setModal] = useState(null);
 
@@ -23,15 +23,21 @@ const Categorias = () => {
             <TitlePage tipo={"Categorias"} />
 
             {panel && (
-                <PanelShow key={panel.id} panel={panel} />
+                <PanelShow key={panel.id} panel={panel} list={list} />
             )}
 
             {modal && (
-                <ModalShow modal={modal} onClose={() => setModal(null)} />
+                <ModalShow modal={modal} list={list} onClose={() => setModal(null)} />
             )}
 
             <div className="p-2">
                 <div>
+                    <div className=" flex justify-center mt-2">
+                        {/* <div className="animate-playa">
+                            <div className=""></div>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Chinese_dragon_asset_heraldry.svg/1200px-Chinese_dragon_asset_heraldry.svg.png" alt="" />
+                        </div> */}
+                    </div>
                     {Generos.map(ge => (
                         <div className="mb-15" key={ge}>
                             <p className="text-3xl font-bold my-3">{ge}</p>
